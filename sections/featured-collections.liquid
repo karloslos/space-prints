@@ -1,0 +1,188 @@
+{{ 'section-featured-collections.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- unless section.settings.heading == blank -%}
+      <h2 class="featured-collections__heading inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endunless -%}
+
+    <ul
+      class="featured-collections grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--2-col-tablet-down"
+      role="list"
+    >
+      {%- for block in section.blocks -%}
+        {%- assign placeholder_image_index = forloop.index0 | modulo: 4 | plus: 1 -%}
+        {%- assign placeholder_image = 'collection-apparel-' | append: placeholder_image_index -%}
+        <li
+          class="featured-collections__item grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          <a
+            {% if block.settings.link == blank %}
+              role="link" aria-disabled="true" tabindex="-1"
+            {% else %}
+              href="{{ block.settings.link }}"
+            {% endif %}
+            class="featured-collections__tile full-unstyled-link"
+          >
+            <div class="featured-collections__media media media--transparent media--hover-effect media--{{ section.settings.image_ratio }}">
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 1600
+                  | image_tag:
+                    sizes: '(min-width: 990px) 25vw, (min-width: 750px) 50vw, 100vw',
+                    widths: '275, 550, 710, 1000, 1420, 1600',
+                    loading: 'lazy'
+                }}
+              {%- else -%}
+                {{ placeholder_image | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+              <span class="featured-collections__scrim" aria-hidden="true"></span>
+            </div>
+            <span class="featured-collections__label h3">
+              {{- block.settings.title | escape -}}
+            </span>
+            {%- if block.settings.link == blank -%}
+              <span class="featured-collections__placeholder-badge">{{ 'sections.featured-collections.placeholder_badge' | t }}</span>
+            {%- endif -%}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured collections",
+  "tag": "section",
+  "class": "section section-featured-collections",
+  "max_blocks": 4,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Shop by subject",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        { "value": "square", "label": "Square" },
+        { "value": "portrait", "label": "Portrait" },
+        { "value": "landscape", "label": "Landscape" }
+      ],
+      "default": "portrait",
+      "label": "Tile image ratio"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-4"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Placeholder graphic shown until a real image is added."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Subject",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Collection link",
+          "info": "Leave blank to show this tile as an unwired placeholder."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collections",
+      "blocks": [
+        { "type": "tile", "settings": { "title": "Mars" } },
+        { "type": "tile", "settings": { "title": "Nebulae" } },
+        { "type": "tile", "settings": { "title": "Earth" } },
+        { "type": "tile", "settings": { "title": "Deep Space" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,75 +1,150 @@
 {
   "sections": {
-    "image_banner": {
+    "hero": {
       "type": "image-banner",
       "blocks": {
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Browse our latest products",
+            "heading": "[Placeholder tagline — e.g. \"Bring the cosmos home\"]",
             "heading_size": "h0"
           }
         },
-        "button": {
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "[Placeholder subheading — one line about fine-art space photography prints]",
+            "text_style": "subtitle"
+          }
+        },
+        "buttons": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Shop all",
+            "button_label_1": "Shop Prints",
             "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
+            "button_style_secondary_1": false,
             "button_label_2": "",
             "button_link_2": "",
             "button_style_secondary_2": false
           }
         }
       },
-      "block_order": [
-        "heading",
-        "button"
-      ],
+      "block_order": ["heading", "text", "buttons"],
       "settings": {
-        "image_overlay_opacity": 40,
+        "image_overlay_opacity": 30,
         "image_height": "large",
-        "desktop_content_position": "bottom-center",
+        "desktop_content_position": "middle-center",
         "show_text_box": false,
         "image_behavior": "none",
         "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
+        "color_scheme": "scheme-4",
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
         "show_text_below": false
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "featured_collections": {
+      "type": "featured-collections",
+      "blocks": {
+        "mars": {
+          "type": "tile",
+          "settings": {
+            "title": "Mars"
+          }
+        },
+        "nebulae": {
+          "type": "tile",
+          "settings": {
+            "title": "Nebulae"
+          }
+        },
+        "earth": {
+          "type": "tile",
+          "settings": {
+            "title": "Earth"
+          }
+        },
+        "deep_space": {
+          "type": "tile",
+          "settings": {
+            "title": "Deep Space"
+          }
+        }
+      },
+      "block_order": ["mars", "nebulae", "earth", "deep_space"],
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
+        "heading": "Shop by subject",
+        "heading_size": "h1",
+        "image_ratio": "portrait",
         "columns_desktop": 4,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-4",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "story_teaser": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Our story",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>[Placeholder story teaser — 2–3 sentences introducing Space Prints: fine-art prints made from real NASA space photography, for people who love looking up.]</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Read our story",
+            "button_style_secondary": true
+          }
+        }
+      },
+      "block_order": ["heading", "text", "button"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-4",
+        "full_width": true,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "photo_of_the_week": {
+      "type": "newsletter",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Photo of the week",
+            "heading_size": "h2"
+          }
+        },
+        "paragraph": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>[Placeholder pitch — one line: get a new space photo in your inbox every week.]</p>"
+          }
+        },
+        "email_form": {
+          "type": "email_form"
+        }
+      },
+      "block_order": ["heading", "paragraph", "email_form"],
+      "settings": {
+        "color_scheme": "scheme-4",
         "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
+        "signup_tag": "photo-of-the-week",
+        "padding_top": 60,
+        "padding_bottom": 72
       }
     }
   },
-  "order": [
-    "image_banner",
-    "featured_collection"
-  ]
+  "order": ["hero", "featured_collections", "story_teaser", "photo_of_the_week"]
 }

@@ -267,6 +267,9 @@
     }
   },
   "sections": {
+    "featured-collections": {
+      "placeholder_badge": "Placeholder — add image + link"
+    },
     "announcements": {
       "previous_announcement": "Previous announcement",
       "next_announcement": "Next announcement",

@@ -46,7 +46,7 @@
         {%- when 'email_form' -%}
           <div {{ block.shopify_attributes }}>
             {% form 'customer', class: 'newsletter-form' %}
-              <input type="hidden" name="contact[tags]" value="newsletter">
+              <input type="hidden" name="contact[tags]" value="{{ section.settings.signup_tag | default: 'newsletter' }}">
               <div
                 class="newsletter-form__field-wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
                 {% if settings.animations_reveal_on_scroll %}
@@ -132,6 +132,13 @@
     {
       "type": "paragraph",
       "content": "t:sections.newsletter.settings.paragraph.content"
+    },
+    {
+      "type": "text",
+      "id": "signup_tag",
+      "default": "newsletter",
+      "label": "Customer tag",
+      "info": "Tags subscribers on the Shopify customer record (e.g. for Klaviyo list segmentation)."
     },
     {
       "type": "color_scheme",
