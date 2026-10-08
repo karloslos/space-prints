@@ -1,0 +1,162 @@
+{{ 'space-prints-components.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .product-showcase-{{ section.id }} {
+    background-color: var(--color-bg-page);
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .product-showcase-{{ section.id }} .product-showcase__tabs {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-2xl) 0;
+    flex-wrap: wrap;
+  }
+  .product-showcase-{{ section.id }} .product-showcase__tab {
+    background: none;
+    font-family: var(--sp-font-body);
+  }
+  .product-showcase-{{ section.id }} .product-showcase__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-xl);
+    align-items: stretch;
+  }
+  @media screen and (min-width: 750px) {
+    .product-showcase-{{ section.id }} .product-showcase__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .product-showcase-{{ section.id }} .product-showcase__grid {
+      grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
+    }
+  }
+  .product-showcase-{{ section.id }} .product-showcase__card {
+    min-width: 0;
+  }
+  .product-showcase-{{ section.id }} .product-showcase__card[hidden] { display: none; }
+  .product-showcase-{{ section.id }} .product-showcase__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-3xl);
+  }
+{%- endstyle -%}
+
+<section class="product-showcase-{{ section.id }}">
+  <div class="page-width">
+    <div class="spc-section-header">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="spc-section-header__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="spc-section-header__heading">{{ section.settings.heading }}</h2>
+      </div>
+    </div>
+
+    {%- if section.settings.show_filters -%}
+      <div class="product-showcase__tabs" data-showcase-filters>
+        <button type="button" class="spc-btn spc-btn--tab product-showcase__tab is-active" data-filter="all">All</button>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'filter' -%}
+            <button type="button" class="spc-btn spc-btn--tab product-showcase__tab" data-filter="{{ block.settings.product_type | escape }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="product-showcase__grid" data-showcase-grid>
+      {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+        {%- liquid
+          assign badge_type = blank
+          if product.tags contains 'best-seller'
+            assign badge_type = 'best-seller'
+          elsif product.tags contains 'new'
+            assign badge_type = 'new'
+          elsif product.tags contains 'limited'
+            assign badge_type = 'limited'
+          endif
+        -%}
+        <div class="product-showcase__card" data-product-type="{{ product.type | escape }}">
+          {% render 'spc-product-card', product: product, badge_type: badge_type %}
+        </div>
+      {%- else -%}
+        {%- for i in (1..8) -%}
+          <div class="product-showcase__card">
+            {% render 'spc-product-card', product: product, badge_type: blank %}
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="product-showcase__footer">
+        <a href="{{ section.settings.button_link | default: '#' }}" class="spc-btn spc-btn--secondary">{{ section.settings.button_label }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if section.settings.show_filters -%}
+<script>
+  (function () {
+    var root = document.currentScript.closest('section') || document.querySelector('.product-showcase-{{ section.id }}');
+    if (!root) return;
+    var buttons = root.querySelectorAll('[data-filter]');
+    var cards = root.querySelectorAll('[data-product-type]');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        buttons.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        var filter = btn.getAttribute('data-filter');
+        cards.forEach(function (card) {
+          var type = card.getAttribute('data-product-type');
+          card.hidden = filter !== 'all' && type !== filter;
+        });
+      });
+    });
+  })();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product showcase",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "Fan favourites" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Best Sellers" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_to_show", "min": 4, "max": 16, "step": 1, "label": "Products to show", "default": 8 },
+    { "type": "range", "id": "columns_desktop", "min": 3, "max": 5, "step": 1, "label": "Columns on desktop", "default": 4 },
+    { "type": "checkbox", "id": "show_filters", "label": "Show filter tabs", "default": true },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Browse All Products" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Top padding", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Bottom padding", "default": 96 }
+  ],
+  "blocks": [
+    {
+      "type": "filter",
+      "name": "Filter tab",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Tab label", "default": "Prints" },
+        { "type": "text", "id": "product_type", "label": "Matching product type", "info": "Must exactly match the Product Type field on the products this tab should show.", "default": "Prints" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Product showcase",
+      "blocks": [
+        { "type": "filter", "settings": { "label": "Prints", "product_type": "Prints" } },
+        { "type": "filter", "settings": { "label": "Apparel", "product_type": "Apparel" } },
+        { "type": "filter", "settings": { "label": "Accessories", "product_type": "Accessories" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

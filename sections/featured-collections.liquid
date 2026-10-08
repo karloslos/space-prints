@@ -1,67 +1,72 @@
-{{ 'section-featured-collections.css' | asset_url | stylesheet_tag }}
+{{ 'space-prints-components.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  .featured-collections-{{ section.id }} {
+    background-color: var(--color-bg-page);
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
   }
-
+  .featured-collections-{{ section.id }} .featured-collections__grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-2xl);
+    list-style: none;
+    padding: 0;
+  }
   @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
+    .featured-collections-{{ section.id }} .featured-collections__grid {
+      grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
     }
+  }
+  .featured-collections-{{ section.id }} .featured-collections__view-all {
+    flex-shrink: 0;
   }
 {%- endstyle -%}
 
-<div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="page-width section-{{ section.id }}-padding">
-    {%- unless section.settings.heading == blank -%}
-      <h2 class="featured-collections__heading inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        {{ section.settings.heading }}
-      </h2>
-    {%- endunless -%}
+<div class="featured-collections-{{ section.id }}">
+  <div class="page-width">
+    <div class="spc-section-header">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="spc-section-header__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- unless section.settings.heading == blank -%}
+          <h2 class="spc-section-header__heading">{{ section.settings.heading }}</h2>
+        {%- endunless -%}
+      </div>
+      {%- if section.settings.view_all_link != blank -%}
+        <a href="{{ section.settings.view_all_link }}" class="spc-btn spc-btn--secondary featured-collections__view-all">{{ section.settings.view_all_label | default: 'View all' }}</a>
+      {%- endif -%}
+    </div>
 
-    <ul
-      class="featured-collections grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--2-col-tablet-down"
-      role="list"
-    >
+    <ul class="featured-collections__grid" role="list">
       {%- for block in section.blocks -%}
-        {%- assign placeholder_image_index = forloop.index0 | modulo: 4 | plus: 1 -%}
-        {%- assign placeholder_image = 'collection-apparel-' | append: placeholder_image_index -%}
-        <li
-          class="featured-collections__item grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          {{ block.shopify_attributes }}
-        >
+        <li {{ block.shopify_attributes }}>
           <a
             {% if block.settings.link == blank %}
               role="link" aria-disabled="true" tabindex="-1"
             {% else %}
               href="{{ block.settings.link }}"
             {% endif %}
-            class="featured-collections__tile full-unstyled-link"
+            class="spc-collection-tile"
           >
-            <div class="featured-collections__media media media--transparent media--hover-effect media--{{ section.settings.image_ratio }}">
-              {%- if block.settings.image != blank -%}
-                {{
-                  block.settings.image
-                  | image_url: width: 1600
-                  | image_tag:
-                    sizes: '(min-width: 990px) 25vw, (min-width: 750px) 50vw, 100vw',
-                    widths: '275, 550, 710, 1000, 1420, 1600',
-                    loading: 'lazy'
-                }}
-              {%- else -%}
-                {{ placeholder_image | placeholder_svg_tag: 'placeholder-svg' }}
-              {%- endif -%}
-              <span class="featured-collections__scrim" aria-hidden="true"></span>
-            </div>
-            <span class="featured-collections__label h3">
-              {{- block.settings.title | escape -}}
-            </span>
-            {%- if block.settings.link == blank -%}
-              <span class="featured-collections__placeholder-badge">{{ 'sections.featured-collections.placeholder_badge' | t }}</span>
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 1200
+                | image_tag:
+                  sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw',
+                  widths: '400, 600, 800, 1200',
+                  loading: 'lazy'
+              }}
             {%- endif -%}
+            <div class="spc-collection-tile__content">
+              <p class="spc-collection-tile__title">{{ block.settings.title | escape }}</p>
+              {%- if block.settings.count != blank -%}
+                <p class="spc-collection-tile__count">{{ block.settings.count }}</p>
+              {%- endif -%}
+            </div>
           </a>
         </li>
       {%- endfor -%}
@@ -79,97 +84,24 @@
     "groups": ["header", "footer"]
   },
   "settings": [
-    {
-      "type": "inline_richtext",
-      "id": "heading",
-      "default": "Shop by subject",
-      "label": "Heading"
-    },
-    {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        { "value": "h2", "label": "Small" },
-        { "value": "h1", "label": "Medium" },
-        { "value": "h0", "label": "Large" }
-      ],
-      "default": "h1",
-      "label": "Heading size"
-    },
-    {
-      "type": "select",
-      "id": "image_ratio",
-      "options": [
-        { "value": "square", "label": "Square" },
-        { "value": "portrait", "label": "Portrait" },
-        { "value": "landscape", "label": "Landscape" }
-      ],
-      "default": "portrait",
-      "label": "Tile image ratio"
-    },
-    {
-      "type": "range",
-      "id": "columns_desktop",
-      "min": 2,
-      "max": 4,
-      "step": 1,
-      "default": 4,
-      "label": "Number of columns on desktop"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-4"
-    },
-    {
-      "type": "header",
-      "content": "Padding"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "Top padding",
-      "default": 48
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "Bottom padding",
-      "default": 48
-    }
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "Browse by theme" },
+    { "type": "inline_richtext", "id": "heading", "default": "Collections", "label": "Heading" },
+    { "type": "text", "id": "view_all_label", "label": "\"View all\" label", "default": "View all" },
+    { "type": "url", "id": "view_all_link", "label": "\"View all\" link" },
+    { "type": "range", "id": "columns_desktop", "min": 2, "max": 4, "step": 1, "default": 3, "label": "Number of columns on desktop" },
+    { "type": "header", "content": "Padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Top padding", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Bottom padding", "default": 96 }
   ],
   "blocks": [
     {
       "type": "tile",
       "name": "Tile",
       "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image",
-          "info": "Placeholder graphic shown until a real image is added."
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "default": "Subject",
-          "label": "Label"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Collection link",
-          "info": "Leave blank to show this tile as an unwired placeholder."
-        }
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "default": "Subject", "label": "Title" },
+        { "type": "text", "id": "count", "label": "Count text", "default": "00 prints" },
+        { "type": "url", "id": "link", "label": "Collection link" }
       ]
     }
   ],
@@ -177,10 +109,9 @@
     {
       "name": "Featured collections",
       "blocks": [
-        { "type": "tile", "settings": { "title": "Mars" } },
-        { "type": "tile", "settings": { "title": "Nebulae" } },
-        { "type": "tile", "settings": { "title": "Earth" } },
-        { "type": "tile", "settings": { "title": "Deep Space" } }
+        { "type": "tile", "settings": { "title": "Nebulae", "count": "34 prints" } },
+        { "type": "tile", "settings": { "title": "Deep Field", "count": "21 prints" } },
+        { "type": "tile", "settings": { "title": "Star Clusters", "count": "18 prints" } }
       ]
     }
   ]

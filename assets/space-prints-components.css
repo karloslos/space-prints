@@ -1,0 +1,569 @@
+/* Space Prints — shared component classes
+   Mirrors the "Components" page of the Space Prints Design System Figma file.
+   Class names are prefixed `spc-` (Space Prints Components) to avoid
+   colliding with Dawn's own component classes. */
+
+/* ---------- Buttons ---------- */
+.spc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius-full);
+  font-family: var(--sp-font-body);
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+.spc-btn:hover { transform: translateY(-1px); }
+
+.spc-btn--primary {
+  padding: 14px 28px;
+  background: var(--sp-gradient-accent);
+  color: var(--color-text-on-accent);
+}
+.spc-btn--primary:hover { box-shadow: var(--sp-shadow-glow-soft); }
+
+.spc-btn--secondary {
+  padding: 14px 28px;
+  background: transparent;
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  color: var(--color-accent-secondary);
+}
+.spc-btn--secondary:hover { border-color: var(--color-accent-secondary); background: rgba(167, 139, 250, 0.08); }
+
+.spc-btn--tab {
+  padding: 9px 20px;
+  background: transparent;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  color: var(--color-accent-secondary);
+  font-size: 1.4rem;
+}
+.spc-btn--tab.is-active,
+.spc-btn--tab[aria-current="true"] {
+  background: var(--sp-gradient-accent);
+  border-color: transparent;
+  color: var(--color-text-on-accent);
+}
+
+/* ---------- Badge ---------- */
+.spc-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-family: var(--sp-font-body);
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.spc-badge--best-seller { background: var(--sp-gradient-accent); color: var(--color-text-on-accent); }
+.spc-badge--new { background: rgba(34, 211, 238, 0.9); color: var(--color-bg-page); }
+.spc-badge--limited { background: rgba(245, 158, 11, 0.9); color: var(--color-bg-page); }
+.spc-badge--sale { background: rgba(244, 63, 94, 0.9); color: var(--color-text-on-accent); }
+.spc-badge--sold-out { background: rgba(148, 163, 184, 0.9); color: var(--color-bg-page); }
+
+/* ---------- Chip ---------- */
+.spc-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--sp-font-body);
+  font-size: 1.2rem;
+  white-space: nowrap;
+  background: rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  color: var(--color-text-secondary);
+}
+.spc-chip--link { text-decoration: none; transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease; }
+.spc-chip--link:hover,
+.spc-chip--link:focus-visible {
+  background: var(--color-accent-primary);
+  border-color: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+  outline: none;
+}
+.spc-chip--link.is-unavailable { opacity: 0.55; text-decoration: line-through; }
+.spc-chip.is-selected {
+  background: var(--color-accent-primary);
+  border-color: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+  font-weight: 500;
+}
+
+/* ---------- Icon button (social) ---------- */
+.spc-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  color: var(--color-accent-secondary);
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.spc-icon-btn:hover { border-color: var(--color-accent-secondary); color: var(--color-text-primary); }
+.spc-icon-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* ---------- Email input ---------- */
+.spc-input {
+  font-family: var(--sp-font-body);
+  font-size: 1.4rem;
+  padding: 14px 20px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-elevated);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  color: var(--color-text-primary);
+}
+.spc-input::placeholder { color: var(--color-text-tertiary); }
+.spc-input:focus { outline: none; border-color: var(--color-accent-secondary); }
+
+/* ---------- Product Card ---------- */
+.spc-product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-elevated);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+}
+.spc-product-card:hover { transform: translateY(-4px); box-shadow: var(--sp-shadow-glow-soft); }
+.spc-product-card__image-wrap { position: relative; aspect-ratio: 4 / 5; background: linear-gradient(135deg, #331a66 10%, #0d0d26 90%); overflow: hidden; }
+.spc-product-card__image { width: 100%; height: 100%; object-fit: cover; display: block; }
+.spc-product-card__image--secondary {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.spc-product-card:hover .spc-product-card__image--secondary { opacity: 1; }
+.spc-product-card__badge { position: absolute; top: 16px; left: 16px; }
+.spc-product-card__content { padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.spc-product-card__category { font-family: var(--sp-font-body); font-weight: 500; font-size: 1.2rem; color: var(--color-text-tertiary); margin: 0; }
+.spc-product-card__title { font-family: var(--sp-font-display); font-weight: 600; font-size: 1.8rem; line-height: 1.3; color: var(--color-text-primary); margin: 0; }
+.spc-product-card__row { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
+.spc-product-card__price { font-family: var(--sp-font-body); font-weight: 700; font-size: 2rem; line-height: 1.2; color: var(--color-accent-secondary); margin: 0; }
+.spc-product-card__price-wrap { display: flex; flex-direction: column; gap: 0; margin: 15px 0; }
+.spc-product-card__from { font-family: var(--sp-font-body); font-weight: 500; font-size: 1.2rem; line-height: 1; color: var(--color-text-tertiary); }
+.spc-product-card__price--compare { font-weight: 500; font-size: 1.4rem; color: var(--color-text-tertiary); text-decoration: line-through; margin-right: 6px; }
+.spc-product-card__price--sale { color: var(--color-accent-secondary); }
+.spc-product-card__link { position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.spc-product-card__link:focus-visible { outline: 2px solid var(--color-accent-secondary); outline-offset: -2px; }
+/* Size chips: real links to the exact size, scrollable when there are too many to fit */
+.spc-product-card__chips {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 8rem;
+  min-width: 8rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.spc-product-card__chips::-webkit-scrollbar { display: none; }
+/* soft fade on whichever side has more sizes hidden (toggled by spc-chip-drag.js) */
+.spc-product-card__chips.has-more-end {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+}
+.spc-product-card__chips.has-more-start {
+  -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 28px), transparent);
+  mask-image: linear-gradient(to left, #000 calc(100% - 28px), transparent);
+}
+.spc-product-card__chips.has-more-start.has-more-end {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 28px), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 28px), transparent);
+}
+.spc-product-card__chips > .spc-chip { flex: none; }
+.spc-product-card__chips { cursor: grab; }
+.spc-product-card__chips.is-dragging,
+.spc-product-card__chips.is-dragging * { cursor: grabbing; user-select: none; }
+.spc-product-card__chips.is-dragging { scroll-behavior: auto; }
+.spc-product-card__chips > :first-child { margin-left: auto; }
+
+/* ---------- Collection Tile ---------- */
+.spc-collection-tile {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 5 / 6;
+  text-decoration: none;
+  background: linear-gradient(135deg, #401f73 10%, #0a081a 90%);
+  transition: transform 0.25s ease;
+}
+.spc-collection-tile:hover { transform: translateY(-4px); }
+.spc-collection-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.spc-collection-tile::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(4, 3, 14, 0.9) 0%, rgba(4, 3, 14, 0) 55%);
+}
+.spc-collection-tile__content { position: relative; z-index: 1; padding: 24px; }
+.spc-collection-tile__title { font-family: var(--sp-font-display); font-weight: 700; font-size: 2.4rem; color: var(--color-text-primary); margin: 0; }
+.spc-collection-tile__count { font-family: var(--sp-font-body); font-size: 1.4rem; color: var(--color-accent-secondary); margin: 4px 0 0; }
+
+/* ---------- Testimonial Card ---------- */
+.spc-testimonial {
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+  padding: 33px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+}
+.spc-testimonial__stars { display: flex; gap: 2px; color: var(--color-accent-highlight); font-size: 1.4rem; }
+.spc-testimonial__quote { font-family: var(--sp-font-body); font-size: 1.4rem; line-height: 1.5; color: var(--color-text-quote); margin: 0; }
+.spc-testimonial__name { font-family: var(--sp-font-body); font-weight: 600; font-size: 1.4rem; color: var(--color-text-primary); margin: 0; }
+.spc-testimonial__location { font-family: var(--sp-font-body); font-size: 1.2rem; color: var(--color-text-tertiary); margin: 0; }
+
+/* ---------- Feature Item ---------- */
+.spc-feature { display: flex; flex-direction: column; gap: 12px; }
+.spc-feature__icon { color: var(--color-accent-primary); font-size: 2.4rem; line-height: 1; }
+.spc-feature__title { font-family: var(--sp-font-display); font-weight: 600; font-size: 1.8rem; color: var(--color-text-primary); margin: 0; }
+.spc-feature__text { font-family: var(--sp-font-body); font-size: 1.4rem; color: var(--color-text-secondary); margin: 0; }
+
+/* ---------- Footer Column ---------- */
+.spc-footer-col__heading { font-family: var(--sp-font-body); font-weight: 500; font-size: 1.4rem; color: var(--color-accent-secondary); margin: 0 0 20px; }
+.spc-footer-col__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.spc-footer-col__list a { font-family: var(--sp-font-body); font-size: 1.4rem; color: var(--color-text-secondary); text-decoration: none; }
+.spc-footer-col__list a:hover { color: var(--color-text-primary); }
+
+/* ---------- Section header row ---------- */
+.spc-section-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.spc-section-header__eyebrow { font-family: var(--sp-font-body); font-weight: 600; font-size: 1.12rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent-secondary); margin: 0 0 8px; }
+.spc-section-header__heading { font-family: var(--sp-font-display); font-weight: 700; font-size: 4.8rem; color: var(--color-text-primary); margin: 0; line-height: 1.05; }
+
+/* ---------- Shared page-level cosmic background ---------- */
+.spc-cosmic-bg { background: var(--color-bg-page); }
+
+@media screen and (max-width: 749px) {
+  .spc-section-header__heading { font-size: 3.2rem; }
+}
+
+/* ---------- Global Dawn primitive overrides ----------
+   Unconditional (not scheme-scoped): the whole site is one dark cosmic
+   design now, so Dawn's own buttons/inputs/cards/footer should always
+   match Space Prints, regardless of which color_scheme a section uses. */
+
+.button,
+.shopify-payment-button__button--unbranded {
+  border-radius: var(--radius-full) !important;
+  background: var(--sp-gradient-accent) !important;
+  border: none !important;
+  color: var(--color-text-on-accent) !important;
+  font-family: var(--sp-font-body);
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.button:hover,
+.shopify-payment-button__button--unbranded:hover {
+  box-shadow: var(--sp-shadow-glow-soft);
+  transform: translateY(-1px);
+}
+.button--secondary,
+.button--tertiary {
+  background: transparent !important;
+  border: 1px solid rgba(167, 139, 250, 0.4) !important;
+  color: var(--color-accent-secondary) !important;
+}
+.button--secondary:hover,
+.button--tertiary:hover {
+  border-color: var(--color-accent-secondary) !important;
+  background: rgba(167, 139, 250, 0.08) !important;
+}
+.button[disabled], .button.disabled {
+  opacity: 0.5;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.field__input,
+.select__select,
+.customer textarea {
+  background: var(--color-bg-elevated);
+  border-color: rgba(167, 139, 250, 0.3);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-md);
+}
+.field__input:focus, .select__select:focus { border-color: var(--color-accent-secondary); }
+.field__label { color: var(--color-text-tertiary); }
+.newsletter-form__button { color: var(--color-accent-secondary); }
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--sp-font-display);
+}
+body, p, a, li, span, input, textarea, select, button {
+  font-family: var(--sp-font-body);
+}
+
+/* Product/collection cards everywhere: collection grid, search results,
+   related products, cart recommendations. */
+.card,
+.card__inner {
+  border-radius: var(--radius-md) !important;
+  background: var(--color-bg-elevated) !important;
+  border: 1px solid rgba(124, 58, 237, 0.15);
+}
+.card__inner.color-background-1,
+.card__inner.color-background-2 { background: var(--color-bg-elevated) !important; }
+.card__heading {
+  font-family: var(--sp-font-display);
+  color: var(--color-text-primary);
+}
+.card__heading a { color: inherit; text-decoration: none; }
+.card-information .price {
+  color: var(--color-accent-secondary);
+  font-family: var(--sp-font-body);
+  font-weight: 700;
+}
+.card__badge .badge {
+  border-radius: var(--radius-full);
+  background: var(--sp-gradient-accent);
+  color: var(--color-text-on-accent);
+  border: none;
+  font-family: var(--sp-font-body);
+}
+.card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card:hover, .card-wrapper:hover .card {
+  box-shadow: var(--sp-shadow-glow-soft);
+  transform: translateY(-4px);
+}
+
+/* Footer: recolor Dawn's own footer structure to match Footer Column look */
+.footer {
+  background: var(--color-bg-page);
+  border-top-color: rgba(124, 58, 237, 0.15);
+}
+.footer-block__heading {
+  font-family: var(--sp-font-body);
+  font-weight: 500;
+  color: var(--color-accent-secondary);
+}
+.footer-block a,
+.list-menu__item {
+  color: var(--color-text-secondary);
+  font-family: var(--sp-font-body);
+}
+.footer-block a:hover {
+  color: var(--color-text-primary);
+}
+.footer__content-bottom {
+  border-top-color: rgba(124, 58, 237, 0.15);
+}
+
+/* ---------- Collection page polish ---------- */
+.collection-hero__title {
+  font-family: var(--sp-font-display);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+.collection-hero__description {
+  color: var(--color-text-secondary);
+  font-family: var(--sp-font-body);
+}
+.facets__heading, .facets__summary-label {
+  font-family: var(--sp-font-body);
+  color: var(--color-text-secondary);
+}
+.facets-container { border-color: rgba(124, 58, 237, 0.15); }
+.facets__disclosure .disclosure__button { color: var(--color-text-primary); }
+.active-facets__button-inner {
+  border-color: rgba(124, 58, 237, 0.3) !important;
+}
+
+/* ---------- Product page: size guide (ruler graphic) ---------- */
+.spc-size-guide {
+  margin: var(--spacing-lg) 0;
+  padding: var(--spacing-lg);
+  background: var(--color-bg-elevated);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  border-radius: var(--radius-md);
+}
+.spc-size-guide[hidden] { display: none; }
+.spc-size-guide__label {
+  font-family: var(--sp-font-body);
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  margin: 0 0 var(--spacing-sm);
+}
+.spc-size-guide__ruler { width: 100%; height: auto; display: block; }
+.spc-size-guide__name {
+  font-family: var(--sp-font-body);
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  margin: var(--spacing-xs) 0 0;
+}
+
+/* ---------- Product page: related photos module heading ---------- */
+.related-products .title,
+.related-products h2 {
+  font-family: var(--sp-font-display);
+}
+
+/* ---------- Cart drawer + cart page ---------- */
+.drawer__inner {
+  background: var(--color-bg-page) !important;
+  border-left: 1px solid rgba(124, 58, 237, 0.2);
+}
+.drawer__header {
+  border-bottom-color: rgba(124, 58, 237, 0.15);
+}
+.drawer__heading {
+  font-family: var(--sp-font-display);
+  color: var(--color-text-primary);
+}
+.drawer__footer {
+  border-top-color: rgba(124, 58, 237, 0.15);
+  background: var(--color-bg-page);
+}
+.cart-item__name, .cart-item__link {
+  font-family: var(--sp-font-display) !important;
+  color: var(--color-text-primary) !important;
+}
+.cart-items thead th {
+  color: var(--color-text-tertiary);
+  font-family: var(--sp-font-body);
+}
+.cart-item {
+  border-bottom-color: rgba(124, 58, 237, 0.12) !important;
+}
+.quantity, .quantity__input {
+  background: var(--color-bg-elevated) !important;
+  border-color: rgba(167, 139, 250, 0.3) !important;
+  color: var(--color-text-primary) !important;
+}
+.quantity__button {
+  color: var(--color-accent-secondary) !important;
+}
+.quantity__button svg { fill: currentColor; }
+.totals__total {
+  font-family: var(--sp-font-display);
+  color: var(--color-text-primary);
+}
+.totals__total-value {
+  font-family: var(--sp-font-body);
+  color: var(--color-accent-secondary);
+  font-weight: 700;
+}
+.tax-note, .cart__login-paragraph {
+  color: var(--color-text-tertiary);
+}
+.cart__warnings .cart__empty-text, .cart-drawer__warnings .cart__empty-text {
+  font-family: var(--sp-font-display);
+  color: var(--color-text-primary);
+}
+
+/* ---------- Search + predictive search ---------- */
+.search-modal__content {
+  border: 1px solid rgba(124, 58, 237, 0.2);
+}
+.search-modal__close-button {
+  color: var(--color-accent-secondary);
+}
+.predictive-search {
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-top: none;
+}
+.predictive-search__heading {
+  font-family: var(--sp-font-body);
+  color: var(--color-text-tertiary);
+}
+.predictive-search-item .card__heading,
+.predictive-search-item__content {
+  font-family: var(--sp-font-body);
+  color: var(--color-text-primary);
+}
+.predictive-search__item-vendor,
+.predictive-search__search-for-button {
+  color: var(--color-accent-secondary);
+}
+.template-search__header .h1, .template-search__header .title {
+  font-family: var(--sp-font-display);
+  color: var(--color-text-primary);
+}
+
+/* ---------- FAQ / collapsible content ---------- */
+.collapsible-content__heading {
+  font-family: var(--sp-font-display);
+  color: var(--color-text-primary);
+}
+.collapsible-content .caption-with-letter-spacing {
+  color: var(--color-accent-secondary);
+}
+.accordion {
+  border-top-color: rgba(124, 58, 237, 0.15);
+}
+.accordion__title {
+  color: var(--color-text-primary);
+  font-family: var(--sp-font-body);
+}
+.accordion .icon-caret {
+  color: var(--color-accent-secondary);
+}
+.accordion__content.rte {
+  color: var(--color-text-secondary);
+}
+
+/* ---------- Basic content pages (about, policies, contact) ---------- */
+.main-page-title {
+  font-family: var(--sp-font-display);
+  color: var(--color-text-primary);
+}
+.rte {
+  color: var(--color-text-secondary);
+  font-family: var(--sp-font-body);
+}
+.rte h2, .rte h3, .rte h4 {
+  font-family: var(--sp-font-display);
+  color: var(--color-text-primary);
+}
+.rte a {
+  color: var(--color-accent-secondary);
+}
+.rte blockquote {
+  border-left-color: rgba(124, 58, 237, 0.4);
+  color: var(--color-text-tertiary);
+}
+.rte ul li::marker, .rte ol li::marker {
+  color: var(--color-accent-secondary);
+}
+
+/* ---------- Blog listing + article ---------- */
+.main-blog .title--primary,
+.article-template__title {
+  font-family: var(--sp-font-display);
+  color: var(--color-text-primary);
+}
+.article-card__info, .caption-with-letter-spacing {
+  color: var(--color-text-tertiary);
+}
+.article-template__link {
+  color: var(--color-accent-secondary);
+}
+.article-template__comment-wrapper {
+  background: var(--color-bg-elevated);
+}

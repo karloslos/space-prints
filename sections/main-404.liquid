@@ -1,23 +1,114 @@
 <style type="text/css">
-  .template-404 .title + * {
-    margin-top: 1rem;
+  .spc-404 {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--spacing-5xl) var(--spacing-lg);
+    overflow: hidden;
+    background: var(--color-bg-page);
   }
 
-  @media screen and (min-width: 750px) {
-    .template-404 .title + * {
-      margin-top: 2rem;
-    }
+  .spc-404::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(248, 250, 252, 0.6), transparent),
+      radial-gradient(1px 1px at 80% 30%, rgba(248, 250, 252, 0.5), transparent),
+      radial-gradient(2px 2px at 30% 70%, rgba(248, 250, 252, 0.4), transparent),
+      radial-gradient(1px 1px at 65% 85%, rgba(248, 250, 252, 0.5), transparent),
+      radial-gradient(1px 1px at 90% 60%, rgba(248, 250, 252, 0.4), transparent),
+      radial-gradient(2px 2px at 45% 15%, rgba(248, 250, 252, 0.3), transparent);
+    background-repeat: repeat;
+    background-size: 100% 100%;
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  .spc-404__content {
+    position: relative;
+    max-width: 56rem;
+    margin: 0 auto;
+  }
+
+  .spc-404__orbit {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto var(--spacing-xl);
+  }
+
+  .spc-404__eyebrow {
+    font-family: var(--sp-font-body);
+    font-size: 1.3rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-accent-secondary);
+    margin: 0 0 var(--spacing-sm);
+  }
+
+  .spc-404__code {
+    font-family: var(--sp-font-display);
+    font-weight: 700;
+    font-size: clamp(6rem, 14vw, 12rem);
+    line-height: 1;
+    margin: 0;
+    background: var(--sp-gradient-hero-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .spc-404__title {
+    font-family: var(--sp-font-display);
+    font-weight: 600;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    color: var(--color-text-primary);
+    margin: var(--spacing-md) 0 var(--spacing-sm);
+  }
+
+  .spc-404__subtext {
+    font-family: var(--sp-font-body);
+    color: var(--color-text-secondary);
+    font-size: 1.6rem;
+    max-width: 42rem;
+    margin: 0 auto var(--spacing-2xl);
   }
 </style>
 
-<div class="template-404 page-width page-margin center">
-  <p>
-    {{ 'templates.404.subtext' | t }}
-  </p>
-  <h1 class="title">
-    {{ 'templates.404.title' | t }}
-  </h1>
-  <a href="{{ routes.all_products_collection_url }}" class="button">
-    {{ 'general.continue_shopping' | t }}
-  </a>
+<div class="spc-404 template-404">
+  <div class="spc-404__content">
+    <svg class="spc-404__orbit" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="60" cy="60" rx="52" ry="20" stroke="rgba(167, 139, 250, 0.35)" stroke-width="1.5" transform="rotate(-18 60 60)"/>
+      <circle cx="60" cy="60" r="22" fill="url(#spc404planet)"/>
+      <circle cx="97" cy="46" r="4" fill="#22D3EE"/>
+      <defs>
+        <linearGradient id="spc404planet" x1="38" y1="38" x2="82" y2="82" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#7C3AED"/>
+          <stop offset="1" stop-color="#3B82F6"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <p class="spc-404__eyebrow">{{ 'templates.404.subtext' | t }}</p>
+    <p class="spc-404__code">404</p>
+    <h1 class="spc-404__title title">
+      {{ 'templates.404.title' | t }}
+    </h1>
+    <p class="spc-404__subtext">
+      This page has drifted out of orbit. Let's get you back to the photography.
+    </p>
+    <a href="{{ routes.all_products_collection_url }}" class="button">
+      {{ 'general.continue_shopping' | t }}
+    </a>
+  </div>
 </div>
+
+{% schema %}
+{
+  "name": "404 page",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,85 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "row-1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Are these official NASA prints?",
+            "icon": "none",
+            "row_content": "<p>Every image is real space photography sourced from NASA's public archives. Space Prints is an independent shop and is not affiliated with, endorsed by, or sponsored by NASA.</p>"
+          }
+        },
+        "row-2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How long will my order take?",
+            "icon": "none",
+            "row_content": "<p>Each print is made to order. Production takes 2-3 working days for most items, and up to 7 days for handmade canvases, followed by 2-4 days for delivery within the UK.</p>"
+          }
+        },
+        "row-3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do you ship outside the UK?",
+            "icon": "none",
+            "row_content": "<p>Right now we ship within the UK only. Shipping is free on orders over £50, and £5 on orders below that.</p>"
+          }
+        },
+        "row-4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What if my print arrives damaged or faulty?",
+            "icon": "none",
+            "row_content": "<p>Send us a photo and we'll send a free reprint or a full refund - no need to send anything back. Just get in touch as soon as you notice the issue.</p>"
+          }
+        },
+        "row-5": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I return an order if I change my mind?",
+            "icon": "none",
+            "row_content": "<p>Yes - you have 14 days from delivery to change your mind. Return the item at your own cost and we'll refund the item price plus standard delivery once it arrives back with us.</p>"
+          }
+        },
+        "row-6": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What size should I choose?",
+            "icon": "none",
+            "row_content": "<p>Every product page has a size guide showing exactly how each option compares to everyday objects, so you can picture it on your wall before you buy.</p>"
+          }
+        },
+        "row-7": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What are your prints made from?",
+            "icon": "none",
+            "row_content": "<p>Each piece is produced to order on professional-grade materials, from fine art paper to gallery canvas, so we can offer premium quality without warehousing stock or waste.</p>"
+          }
+        }
+      },
+      "block_order": ["row-1", "row-2", "row-3", "row-4", "row-5", "row-6", "row-7"],
+      "settings": {
+        "caption": "",
+        "heading": "Frequently asked questions",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "scheme-4",
+        "color_scheme": "scheme-1",
+        "padding_top": 12,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": ["main", "faq"]
+}

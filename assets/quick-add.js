@@ -75,6 +75,9 @@ if (!customElements.get('quick-add-modal')) {
 
         const modalDialog = productElement.querySelectorAll('modal-dialog');
         if (modalDialog) modalDialog.forEach((modal) => modal.remove());
+
+        const zoomViewer = productElement.querySelector('zoom-viewer');
+        if (zoomViewer) zoomViewer.remove();
       }
 
       preventDuplicatedIDs(productElement) {

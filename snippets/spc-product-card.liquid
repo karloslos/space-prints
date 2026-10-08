@@ -1,0 +1,163 @@
+{% comment %}
+  Renders a Space Prints product card. Used everywhere a product grid card is
+  needed (homepage Best Sellers, collection grids, search results, related
+  products) so every grid on the site looks identical.
+  Accepts:
+  - product: a product object (required)
+  - badge_type: 'best-seller' | 'new' | 'limited' | blank (optional)
+    Overrides automatic detection. When blank, the badge is worked out from
+    the product's tags/availability/price (sold out > tag badge > sale).
+  - show_secondary_image: boolean (optional) — cross-fade to the product's
+    second media item on hover, when available.
+  - lazy_load: boolean (optional, default true) — pass false for cards
+    above the fold so the image loads eagerly.
+{% endcomment %}
+{%- liquid
+  assign spc_grid_image = product.metafields.custom.featured_grid_image.value
+  assign spc_card_image = product.featured_image
+  if spc_grid_image != blank
+    assign spc_card_image = spc_grid_image
+  endif
+
+  assign spc_badge_type = badge_type
+  if spc_badge_type == blank
+    if product.available == false
+      assign spc_badge_type = 'sold-out'
+    elsif product.tags contains 'best-seller'
+      assign spc_badge_type = 'best-seller'
+    elsif product.tags contains 'new'
+      assign spc_badge_type = 'new'
+    elsif product.tags contains 'limited'
+      assign spc_badge_type = 'limited'
+    elsif product.compare_at_price > product.price
+      assign spc_badge_type = 'sale'
+    endif
+  elsif product.available == false
+    assign spc_badge_type = 'sold-out'
+  endif
+
+  comment
+    Hover image: with a custom grid image, hover reveals the first gallery image.
+    Without one, hover reveals the second gallery image (original behaviour).
+  endcomment
+  assign spc_show_secondary = false
+  assign spc_secondary_image = blank
+  if show_secondary_image
+    if spc_grid_image != blank
+      assign spc_secondary_image = product.images.first
+    else
+      assign spc_secondary_image = product.media[1]
+    endif
+    if spc_secondary_image != blank
+      assign spc_show_secondary = true
+    endif
+  endif
+
+  assign spc_loading = 'lazy'
+  if lazy_load == false
+    assign spc_loading = 'eager'
+  endif
+-%}
+<div class="spc-product-card">
+  <a href="{{ product.url }}" class="spc-product-card__link"><span class="visually-hidden">{{ product.title | escape }}</span></a>
+  <div class="spc-product-card__image-wrap">
+    {%- if spc_card_image != blank -%}
+      <img
+        class="spc-product-card__image spc-product-card__image--primary"
+        src="{{ spc_card_image | image_url: width: 800 }}"
+        alt="{{ spc_card_image.alt | default: product.title | escape }}"
+        loading="{{ spc_loading }}"
+        width="{{ spc_card_image.width }}"
+        height="{{ spc_card_image.height }}"
+      >
+    {%- endif -%}
+    {%- if spc_show_secondary -%}
+      <img
+        class="spc-product-card__image spc-product-card__image--secondary"
+        src="{{ spc_secondary_image | image_url: width: 800 }}"
+        alt=""
+        loading="lazy"
+        width="{{ spc_secondary_image.width }}"
+        height="{{ spc_secondary_image.height }}"
+      >
+    {%- endif -%}
+    {%- case spc_badge_type -%}
+      {%- when 'best-seller' -%}
+        <span class="spc-badge spc-badge--best-seller spc-product-card__badge">Best Seller</span>
+      {%- when 'new' -%}
+        <span class="spc-badge spc-badge--new spc-product-card__badge">New</span>
+      {%- when 'limited' -%}
+        <span class="spc-badge spc-badge--limited spc-product-card__badge">Limited</span>
+      {%- when 'sale' -%}
+        <span class="spc-badge spc-badge--sale spc-product-card__badge">Sale</span>
+      {%- when 'sold-out' -%}
+        <span class="spc-badge spc-badge--sold-out spc-product-card__badge">Sold Out</span>
+    {%- endcase -%}
+  </div>
+  <div class="spc-product-card__content">
+    <p class="spc-product-card__category">{{ product.type | default: 'Fine Art Print' }}</p>
+    <p class="spc-product-card__title">{{ product.title }}</p>
+    <div class="spc-product-card__row">
+      <div class="spc-product-card__price-wrap">
+        {%- if product.variants.size > 1 -%}
+          <span class="spc-product-card__from">From</span>
+        {%- endif -%}
+        <p class="spc-product-card__price">
+          {%- if product.compare_at_price > product.price -%}
+            <span class="spc-product-card__price--compare">{{ product.compare_at_price | money_without_trailing_zeros }}</span>
+            <span class="spc-product-card__price--sale">{{ product.price | money_without_trailing_zeros }}</span>
+          {%- else -%}
+            {{ product.price | money_without_trailing_zeros }}
+          {%- endif -%}
+        </p>
+      </div>
+      {%- liquid
+        comment
+          Size chips: only the "Size" option's values (not combined with other options like
+          material or frame). Falls back to the first option if no option is named like "size".
+        endcomment
+        assign spc_size_position = 0
+        for option in product.options_with_values
+          assign spc_option_name = option.name | downcase
+          if spc_option_name contains 'size' and spc_size_position == 0
+            assign spc_size_position = forloop.index
+          endif
+        endfor
+        if spc_size_position == 0
+          assign spc_size_position = 1
+        endif
+        assign spc_option_index = spc_size_position | minus: 1
+        assign spc_size_option = product.options_with_values[spc_option_index]
+      -%}
+      {%- if spc_size_option.values.size > 0 -%}
+        <div class="spc-product-card__chips">
+          {%- for size_value in spc_size_option.values -%}
+            {%- liquid
+              assign spc_chip_variant = null
+              assign spc_chip_available = false
+              for variant in product.variants
+                if variant.options[spc_option_index] == size_value
+                  if spc_chip_variant == null
+                    assign spc_chip_variant = variant
+                  endif
+                  if variant.available
+                    if spc_chip_available == false
+                      assign spc_chip_variant = variant
+                    endif
+                    assign spc_chip_available = true
+                  endif
+                endif
+              endfor
+            -%}
+            <a
+              href="{{ spc_chip_variant.url }}"
+              class="spc-chip spc-chip--link{% unless spc_chip_available %} is-unavailable{% endunless %}"
+              title="{{ size_value | escape }}{% unless spc_chip_available %} (sold out){% endunless %}"
+              draggable="false"
+            >{{ size_value | split: ' / ' | first }}</a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

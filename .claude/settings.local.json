@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(shopify version *)",
+      "Bash(git --version)",
+      "Bash(shopify theme *)",
+      "Bash(git clone *)",
+      "Bash(git init *)",
+      "Bash(git remote *)",
+      "Bash(git fetch *)",
+      "Bash(grep -E 'dawn-upstream/\\(main|master\\)$')",
+      "Bash(git checkout *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git config *)",
+      "Bash(git push *)"
+    ]
+  }
+}

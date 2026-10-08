@@ -1,0 +1,303 @@
+{{ 'space-prints-components.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .hero-cosmic-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-bg-page);
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.55;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, rgba(4,3,14,0.92) 0%, rgba(4,3,14,0.55) 50%, rgba(4,3,14,0.3) 100%),
+      linear-gradient(to top, var(--color-bg-page) 0%, rgba(4,3,14,0) 40%);
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4xl);
+    align-items: center;
+  }
+  @media screen and (min-width: 990px) {
+    .hero-cosmic-{{ section.id }} .hero-cosmic__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__eyebrow {
+    font-family: var(--sp-font-body);
+    font-weight: 600;
+    font-size: 1.12rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent-secondary);
+    margin: 0 0 var(--spacing-xl);
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__heading {
+    font-family: var(--sp-font-display);
+    font-weight: 700;
+    font-size: clamp(3.6rem, 6vw, 9.6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__heading em {
+    font-style: italic;
+    font-weight: 700;
+    background: var(--sp-gradient-hero-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__subtext {
+    font-family: var(--sp-font-body);
+    font-size: 1.8rem;
+    line-height: 1.6;
+    color: rgba(203, 213, 225, 0.85);
+    max-width: 46rem;
+    margin: var(--spacing-xl) 0 0;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__cta {
+    margin-top: var(--spacing-2xl);
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__stats {
+    display: flex;
+    gap: var(--spacing-2xl);
+    margin-top: var(--spacing-3xl);
+    flex-wrap: wrap;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__stat-value {
+    font-family: var(--sp-font-display);
+    font-weight: 700;
+    font-size: 2.4rem;
+    color: var(--color-accent-secondary);
+    margin: 0;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__stat-label {
+    font-family: var(--sp-font-body);
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(148, 163, 184, 0.7);
+    margin: 2px 0 0;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__floating {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__card {
+    position: relative;
+    width: min(34rem, 100%);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    box-shadow: var(--sp-shadow-glow-soft);
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__card--link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__card--link:hover {
+    transform: translateY(-4px);
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__card img {
+    width: 100%;
+    height: auto; /* the img's height attribute would otherwise override aspect-ratio and stretch the card */
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__card-caption {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: var(--spacing-lg);
+    background: linear-gradient(to top, rgba(4,3,14,0.95), rgba(4,3,14,0));
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__card-title {
+    font-family: var(--sp-font-display);
+    font-weight: 600;
+    font-size: 1.8rem;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__card-meta {
+    font-family: var(--sp-font-body);
+    font-size: 1.4rem;
+    color: var(--color-accent-secondary);
+    margin: 2px 0 0;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__glow {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(56px);
+    z-index: -1;
+    pointer-events: none;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__glow--one {
+    width: 128px; height: 128px;
+    background: rgba(124, 58, 237, 0.4);
+    top: -10%; right: 5%;
+  }
+  .hero-cosmic-{{ section.id }} .hero-cosmic__glow--two {
+    width: 96px; height: 96px;
+    background: rgba(59, 130, 246, 0.3);
+    bottom: 5%; left: -5%;
+  }
+{%- endstyle -%}
+
+<section class="hero-cosmic-{{ section.id }}">
+  {%- if section.settings.background_image != blank -%}
+    <div class="hero-cosmic__bg">
+      <img
+        src="{{ section.settings.background_image | image_url: width: 2400 }}"
+        alt=""
+        loading="eager"
+        width="{{ section.settings.background_image.width }}"
+        height="{{ section.settings.background_image.height }}"
+      >
+    </div>
+  {%- else -%}
+    <div class="hero-cosmic__bg"></div>
+  {%- endif -%}
+
+  <div class="page-width hero-cosmic__grid">
+    <div class="hero-cosmic__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="hero-cosmic__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+
+      <h1 class="hero-cosmic__heading">
+        {%- liquid
+          assign heading = section.settings.heading
+          assign highlight = section.settings.heading_highlight
+          if highlight != blank and heading contains highlight
+            assign wrapped = '<em>' | append: highlight | append: '</em>'
+            assign heading = heading | replace: highlight, wrapped
+          endif
+        -%}
+        {{ heading }}
+      </h1>
+
+      {%- if section.settings.subtext != blank -%}
+        <p class="hero-cosmic__subtext">{{ section.settings.subtext }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank -%}
+        <div class="hero-cosmic__cta">
+          <a href="{{ section.settings.button_link | default: '#' }}" class="spc-btn spc-btn--secondary">{{ section.settings.button_label }}</a>
+        </div>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="hero-cosmic__stats">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'stat' -%}
+              <div {{ block.shopify_attributes }}>
+                <p class="hero-cosmic__stat-value">{{ block.settings.value }}</p>
+                <p class="hero-cosmic__stat-label">{{ block.settings.label }}</p>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="hero-cosmic__floating">
+      {%- if section.settings.floating_image != blank -%}
+        {%- if section.settings.floating_link != blank -%}
+          <a href="{{ section.settings.floating_link }}" class="hero-cosmic__card hero-cosmic__card--link">
+        {%- else -%}
+          <div class="hero-cosmic__card">
+        {%- endif -%}
+          <img
+            src="{{ section.settings.floating_image | image_url: width: 800 }}"
+            alt="{{ section.settings.floating_image.alt | default: section.settings.floating_title | escape }}"
+            loading="lazy"
+            width="{{ section.settings.floating_image.width }}"
+            height="{{ section.settings.floating_image.height }}"
+          >
+          {%- if section.settings.floating_title != blank -%}
+            <div class="hero-cosmic__card-caption">
+              <p class="hero-cosmic__card-title">{{ section.settings.floating_title }}</p>
+              {%- if section.settings.floating_subtitle != blank -%}
+                <p class="hero-cosmic__card-meta">{{ section.settings.floating_subtitle }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- if section.settings.floating_link != blank -%}
+          </a>
+        {%- else -%}
+          </div>
+        {%- endif -%}
+        <span class="hero-cosmic__glow hero-cosmic__glow--one" aria-hidden="true"></span>
+        <span class="hero-cosmic__glow hero-cosmic__glow--two" aria-hidden="true"></span>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cosmic hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "The universe, framed" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Bring space into your space" },
+    { "type": "text", "id": "heading_highlight", "label": "Word to highlight in heading", "info": "Must match a word in the heading exactly. Rendered in italic gradient text.", "default": "your" },
+    { "type": "textarea", "id": "subtext", "label": "Subtext", "default": "Museum-quality prints sourced from publicly available astronomical imagery. From swirling nebulae to ancient star clusters — for walls that deserve something extraordinary." },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "View Collections" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "header", "content": "Floating product card" },
+    { "type": "image_picker", "id": "floating_image", "label": "Image" },
+    { "type": "url", "id": "floating_link", "label": "Link (optional)", "info": "Makes the whole card clickable, e.g. a product page." },
+    { "type": "text", "id": "floating_title", "label": "Title", "default": "Pillars of Creation" },
+    { "type": "text", "id": "floating_subtitle", "label": "Subtitle", "default": "Fine Art Print — from £89" },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "Top padding", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "Bottom padding", "default": 96 }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "10k+" },
+        { "type": "text", "id": "label", "label": "Label", "default": "prints sold" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Cosmic hero",
+      "blocks": [
+        { "type": "stat", "settings": { "value": "10k+", "label": "prints sold" } },
+        { "type": "stat", "settings": { "value": "100yr", "label": "archival life" } },
+        { "type": "stat", "settings": { "value": "4.9★", "label": "avg rating" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

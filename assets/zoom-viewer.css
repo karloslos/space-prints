@@ -1,0 +1,254 @@
+/* Space Prints – full detail zoom viewer (see zoom-viewer.js, snippets/product-zoom-viewer.liquid) */
+
+zoom-viewer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  background: var(--color-bg-page, #04030e);
+  color: var(--color-text-primary, #f8fafc);
+  font-family: var(--font-body-family, 'Outfit', sans-serif);
+}
+
+zoom-viewer[open] {
+  display: block;
+}
+
+.zoom-viewer__dialog {
+  position: absolute;
+  inset: 0;
+  outline: none;
+}
+
+.zoom-viewer__stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  background: radial-gradient(ellipse at center, var(--color-bg-surface, #080620) 0%, var(--color-bg-page, #04030e) 100%);
+}
+
+.zoom-viewer__stage.is-dragging {
+  cursor: grabbing;
+}
+
+.zoom-viewer__canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+}
+
+.zoom-viewer__canvas img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  display: block;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.zoom-viewer__full {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.zoom-viewer__canvas.is-loaded .zoom-viewer__full {
+  opacity: 1;
+}
+
+/* Close button */
+.zoom-viewer__close {
+  position: absolute;
+  top: max(1.6rem, env(safe-area-inset-top));
+  right: max(1.6rem, env(safe-area-inset-right));
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-default, #7c3aed);
+  background: rgba(8, 6, 32, 0.78);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: inherit;
+  cursor: pointer;
+}
+
+.zoom-viewer__close svg {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+/* Toolbar */
+.zoom-viewer__toolbar {
+  position: absolute;
+  left: 50%;
+  bottom: max(2rem, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-default, #7c3aed);
+  background: rgba(8, 6, 32, 0.82);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--sp-shadow-glow-soft, 0 0 20px rgba(124, 58, 237, 0.1));
+  max-width: calc(100vw - 2rem);
+}
+
+.zoom-viewer__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 4.4rem;
+  height: 4.4rem;
+  padding: 0 0.8rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.zoom-viewer__button:hover:not(:disabled) {
+  background: rgba(167, 139, 250, 0.18);
+}
+
+.zoom-viewer__button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.zoom-viewer__button--readout {
+  min-width: 6.4rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.zoom-viewer__button--text {
+  padding: 0 1.6rem;
+  border-left: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 0 999px 999px 0;
+  white-space: nowrap;
+}
+
+.zoom-viewer__close:focus-visible,
+.zoom-viewer__button:focus-visible {
+  outline: 2px solid var(--color-accent-secondary, #a78bfa);
+  outline-offset: 2px;
+}
+
+/* Hint + status */
+.zoom-viewer__hint,
+.zoom-viewer__status {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  margin: 0;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  background: rgba(8, 6, 32, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  font-size: 1.3rem;
+  line-height: 1.3;
+  text-align: center;
+  max-width: calc(100vw - 2rem);
+  pointer-events: none;
+}
+
+.zoom-viewer__hint {
+  top: max(2.2rem, env(safe-area-inset-top));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.zoom-viewer__hint.is-visible {
+  opacity: 1;
+}
+
+.zoom-viewer__status {
+  bottom: calc(max(2rem, env(safe-area-inset-bottom)) + 6.4rem);
+}
+
+.zoom-viewer__status.is-error {
+  border-color: var(--color-accent-highlight, #f59e0b);
+}
+
+@media screen and (max-width: 749px) {
+  .zoom-viewer__button--readout {
+    min-width: 5.6rem;
+  }
+
+  .zoom-viewer__button--text {
+    padding: 0 1.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zoom-viewer__full,
+  .zoom-viewer__hint {
+    transition: none;
+  }
+}
+
+/* ---- The "Explore full detail" pill on the first gallery image (see product-thumbnail) ---- */
+
+.product__modal-opener--zoom .product__media-icon {
+  display: none;
+}
+
+.product__zoom-pill {
+  position: absolute;
+  left: 1.2rem;
+  bottom: 1.2rem;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.4rem 0.7rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-default, #7c3aed);
+  background: rgba(8, 6, 32, 0.82);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: var(--color-text-primary, #f8fafc);
+  font-size: 1.3rem;
+  line-height: 1;
+  pointer-events: none;
+  transition: background-color 0.2s ease;
+}
+
+.product__zoom-pill .svg-wrapper,
+.product__zoom-pill .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.product__modal-opener--zoom:hover .product__zoom-pill {
+  background: rgba(124, 58, 237, 0.9);
+}
+
+.product__modal-opener--zoom .product__media-toggle:hover {
+  cursor: zoom-in;
+}
+
+/* No zoom viewer in the quick-add popup */
+quick-add-modal .product__zoom-pill {
+  display: none;
+}

@@ -1,0 +1,97 @@
+{{ 'space-prints-components.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .testimonials-{{ section.id }} {
+    background-color: var(--color-bg-page);
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .testimonials-{{ section.id }} .testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-2xl);
+    list-style: none;
+    padding: 0;
+  }
+  @media screen and (min-width: 750px) {
+    .testimonials-{{ section.id }} .testimonials__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .testimonials-{{ section.id }} .testimonials__grid {
+      grid-template-columns: repeat({{ section.blocks.size | at_most: 4 }}, 1fr);
+    }
+  }
+{%- endstyle -%}
+
+<div class="testimonials-{{ section.id }}">
+  <div class="page-width">
+    <div class="spc-section-header">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="spc-section-header__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- unless section.settings.heading == blank -%}
+          <h2 class="spc-section-header__heading">{{ section.settings.heading }}</h2>
+        {%- endunless -%}
+      </div>
+    </div>
+
+    <ul class="testimonials__grid" role="list">
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }}>
+          <div class="spc-testimonial">
+            <div class="spc-testimonial__stars" aria-hidden="true">
+              {%- assign rating = block.settings.rating | default: 5 -%}
+              {%- for i in (1..rating) -%}&#9733;{%- endfor -%}
+            </div>
+            <p class="spc-testimonial__quote">&ldquo;{{ block.settings.quote }}&rdquo;</p>
+            <div>
+              <p class="spc-testimonial__name">{{ block.settings.name }}</p>
+              <p class="spc-testimonial__location">{{ block.settings.location }}</p>
+            </div>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "Reviews" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Collectors love it" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Top padding", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Bottom padding", "default": 96 }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Star rating", "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "The quality is absolutely stunning. I've ordered three prints now and each one is better than the last." },
+        { "type": "text", "id": "name", "label": "Name", "default": "Customer Name" },
+        { "type": "text", "id": "location", "label": "Location", "default": "Location" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "testimonial", "settings": { "name": "Maren H.", "location": "Edinburgh", "quote": "The quality is absolutely stunning. I've ordered three prints now and each one is better than the last. My Pillars of Creation piece stops everyone who walks in." } },
+        { "type": "testimonial", "settings": { "name": "Tom K.", "location": "Bristol" } },
+        { "type": "testimonial", "settings": { "name": "Priya S.", "location": "Manchester" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

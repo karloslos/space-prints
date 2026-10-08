@@ -25,6 +25,11 @@
     assign media_count = media_count | minus: variant_images.size | plus: 1
   endif
 
+  assign zoom_image = product.metafields.custom.zoom_image.value
+  if zoom_image != blank and limit == null
+    assign zoom_enabled = true
+  endif
+
   if media_count == 1 or single_media_visible
     assign single_media_visible_mobile = true
   endif
@@ -81,7 +86,8 @@
             media_width: media_width,
             media_fit: section.settings.media_fit,
             constrain_to_viewport: section.settings.constrain_to_viewport,
-            lazy_load: false
+            lazy_load: false,
+            zoom_enabled: zoom_enabled
           %}
         </li>
       {%- endif -%}
@@ -119,7 +125,8 @@
               media_width: media_width,
               media_fit: section.settings.media_fit,
               constrain_to_viewport: section.settings.constrain_to_viewport,
-              lazy_load: lazy_load
+              lazy_load: lazy_load,
+              zoom_enabled: zoom_enabled
             %}
           </li>
         {%- endunless -%}

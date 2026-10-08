@@ -1,0 +1,86 @@
+/* Space Prints — design tokens
+   Generated from the "Space Prints Design System" Figma file (Foundations page).
+   These are CSS custom properties only — no selectors besides :root and the
+   two Dawn font-variable overrides. Everything else lives in
+   space-prints-components.css and per-section stylesheets. */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,700&family=Outfit:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Color primitives */
+  --sp-color-purple-600: #7C3AED;
+  --sp-color-purple-300: #A78BFA;
+  --sp-color-blue-500: #3B82F6;
+  --sp-color-cyan-400: #22D3EE;
+  --sp-color-amber-500: #F59E0B;
+  --sp-color-slate-50: #F8FAFC;
+  --sp-color-slate-300: #CBD5E1;
+  --sp-color-slate-400: #94A3B8;
+  --sp-color-slate-500: #6B7280;
+  --sp-color-white: #FFFFFF;
+  --sp-color-navy-950: #04030E;
+  --sp-color-navy-900: #080620;
+  --sp-color-navy-800: #120E35;
+
+  /* Color — semantic (mirrors the Figma "Color" variable collection) */
+  --color-bg-page: var(--sp-color-navy-950);
+  --color-bg-surface: var(--sp-color-navy-900);
+  --color-bg-elevated: var(--sp-color-navy-800);
+  --color-text-primary: var(--sp-color-slate-50);
+  --color-text-secondary: var(--sp-color-slate-400);
+  --color-text-tertiary: var(--sp-color-slate-500);
+  --color-text-quote: var(--sp-color-slate-300);
+  --color-text-on-accent: var(--sp-color-white);
+  --color-accent-primary: var(--sp-color-purple-600);
+  --color-accent-secondary: var(--sp-color-purple-300);
+  --color-accent-highlight: var(--sp-color-amber-500);
+  --color-accent-info: var(--sp-color-cyan-400);
+  --color-accent-gradient-start: var(--sp-color-purple-600);
+  --color-accent-gradient-end: var(--sp-color-blue-500);
+  --color-border-default: var(--sp-color-purple-600);
+  --color-border-subtle: var(--sp-color-slate-400);
+
+  /* Spacing */
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 20px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 48px;
+  --spacing-4xl: 64px;
+  --spacing-5xl: 96px;
+
+  /* Radius */
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 999px;
+
+  /* Typography */
+  --sp-font-display: 'Fraunces', Georgia, serif;
+  --sp-font-body: 'Outfit', -apple-system, sans-serif;
+
+  /* Effects */
+  --sp-shadow-glow-soft: 0px 0px 20px 0px rgba(124, 58, 237, 0.10);
+  --sp-shadow-glow-inner: inset 0px 0px 20px 0px rgba(124, 58, 237, 0.05);
+
+  /* Gradients */
+  --sp-gradient-accent: linear-gradient(163deg, var(--color-accent-gradient-start) 0%, var(--color-accent-gradient-end) 100%);
+  --sp-gradient-hero-text: linear-gradient(152deg, var(--sp-color-purple-300) 0%, #60A5FA 50%, var(--sp-color-cyan-400) 100%);
+}
+
+/* Repoint Dawn's global type system at the new brand fonts. Dawn's whole
+   theme (headings, buttons, forms, cards) reads from these two variables,
+   so this is the one place that needs to change for site-wide typography. */
+:root {
+  --font-heading-family: var(--sp-font-display);
+  --font-heading-style: normal;
+  --font-heading-weight: 700;
+  --font-body-family: var(--sp-font-body);
+  --font-body-style: normal;
+  --font-body-weight: 400;
+  --font-body-weight-bold: 600;
+}

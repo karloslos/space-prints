@@ -1,0 +1,147 @@
+{% comment %}
+  Ruler-style size comparison graphic (NOT a human silhouette, per project spec).
+  Draws a 100cm ruler with a highlighted bar showing the selected variant's
+  real-world width, updating live as the customer changes size/variant.
+
+  Reads the selected variant via Dawn's own variant-change pub/sub event
+  (assets/pubsub.js + assets/product-info.js) rather than scraping form
+  input names, because Dawn's "button" (pill) variant picker style does NOT
+  name its radio inputs "options[...]" (it uses "{{ option.name }}-{{ option.position }}"
+  and lets its own JS own the selection state) - only the "dropdown" picker
+  style does. Reading the pub/sub event's variant object works for every
+  picker style and matches Dawn's own default variant already selected on
+  first paint.
+
+  Accepts: product (required).
+{% endcomment %}
+<div class="spc-size-guide" data-spc-size-guide data-product-id="{{ product.id }}" hidden>
+  <p class="spc-size-guide__label">Actual print size</p>
+  <svg class="spc-size-guide__ruler" viewBox="0 0 1000 150" preserveAspectRatio="xMinYMid meet" role="img" aria-hidden="true">
+    <line x1="0" y1="40" x2="1000" y2="40" stroke="var(--color-border-subtle, #94A3B8)" stroke-width="2" opacity="0.5"></line>
+    {%- for i in (0..20) -%}
+      {%- assign x = i | times: 50 -%}
+      {%- assign is_major = i | modulo: 2 -%}
+      <line x1="{{ x }}" y1="{% if is_major == 0 %}24{% else %}30{% endif %}" x2="{{ x }}" y2="40" stroke="var(--color-border-subtle, #94A3B8)" stroke-width="2" opacity="0.6"></line>
+      {%- if is_major == 0 -%}
+        <text x="{{ x }}" y="18" font-size="16" fill="var(--color-text-tertiary, #6B7280)" font-family="Outfit, sans-serif" text-anchor="middle">{{ i | times: 5 }}</text>
+      {%- endif -%}
+    {%- endfor -%}
+    <rect id="SpcSizeBar-{{ product.id }}" class="spc-size-guide__bar" x="0" y="60" width="210" height="28" rx="4" fill="url(#spcSizeGradient)"></rect>
+    <text id="SpcSizeLabel-{{ product.id }}" class="spc-size-guide__dims" x="0" y="112" font-size="22" font-family="Fraunces, serif" font-weight="600" fill="var(--color-text-primary, #F8FAFC)">21 &times; 29.7 cm</text>
+    <text x="1000" y="18" font-size="14" font-family="Outfit, sans-serif" fill="var(--color-text-tertiary, #6B7280)" text-anchor="end">cm</text>
+    <defs>
+      <linearGradient id="spcSizeGradient" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#7C3AED"></stop>
+        <stop offset="100%" stop-color="#3B82F6"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
+  <p id="SpcSizeName-{{ product.id }}" class="spc-size-guide__name"></p>
+</div>
+
+<script type="application/json" data-spc-initial-variant="{{ product.id }}">
+  {{ product.selected_or_first_available_variant | json }}
+</script>
+
+{%- comment -%} 10 SVG units = 1cm, ruler spans 100cm (1000 units) {%- endcomment -%}
+<script>
+  (function () {
+    var SPC_SIZE_LOOKUP = {
+      'a4': [21, 29.7], 'a3': [29.7, 42], 'a2': [42, 59.4], 'a1': [59.4, 84.1], 'a0': [84.1, 118.9],
+      '8x10': [20.3, 25.4], '11x14': [27.9, 35.6], '12x16': [30.5, 40.6], '16x20': [40.6, 50.8],
+      '18x24': [45.7, 61], '20x24': [50.8, 61], '24x36': [61, 91.4], 'xs': [15, 20], 's': [21, 29.7],
+      'm': [30, 40], 'l': [40, 50], 'xl': [60, 80]
+    };
+    var UNITS_PER_CM = 10;
+
+    function parseSize(value) {
+      if (!value) return null;
+      var v = value.toString().toLowerCase().trim();
+      if (SPC_SIZE_LOOKUP[v]) return SPC_SIZE_LOOKUP[v];
+      var cmMatch = v.match(/(\d+(?:\.\d+)?)\s*x\s*(\d+(?:\.\d+)?)\s*cm/);
+      if (cmMatch) return [parseFloat(cmMatch[1]), parseFloat(cmMatch[2])];
+      var inMatch = v.match(/(\d+(?:\.\d+)?)\s*x\s*(\d+(?:\.\d+)?)\s*(in|"|inch)/);
+      if (inMatch) return [parseFloat(inMatch[1]) * 2.54, parseFloat(inMatch[2]) * 2.54];
+      var bare = v.match(/^(\d+(?:\.\d+)?)\s*x\s*(\d+(?:\.\d+)?)$/);
+      if (bare) return [parseFloat(bare[1]), parseFloat(bare[2])];
+      return null;
+    }
+
+    function findSizeFromOptions(optionValues) {
+      for (var i = 0; i < optionValues.length; i++) {
+        var size = parseSize(optionValues[i]);
+        if (size) return { size: size, label: optionValues[i] };
+      }
+      return null;
+    }
+
+    function updateGuide(root, result) {
+      if (!result) { root.hidden = true; return; }
+      var widthCm = result.size[0];
+      var heightCm = result.size[1];
+      var productId = root.getAttribute('data-product-id');
+      var bar = document.getElementById('SpcSizeBar-' + productId);
+      var label = document.getElementById('SpcSizeLabel-' + productId);
+      var name = document.getElementById('SpcSizeName-' + productId);
+      if (!bar || !label) return;
+      var widthUnits = Math.min(widthCm * UNITS_PER_CM, 1000);
+      bar.setAttribute('width', widthUnits);
+      label.textContent = widthCm + ' × ' + heightCm + ' cm';
+      if (name) name.textContent = result.label;
+      root.hidden = false;
+    }
+
+    function applyVariant(root, variant) {
+      if (!variant) { root.hidden = true; return; }
+      var optionValues = variant.options || [variant.title];
+      updateGuide(root, findSizeFromOptions(optionValues));
+    }
+
+    function init(root) {
+      var productId = root.getAttribute('data-product-id');
+
+      var initialScript = document.querySelector('[data-spc-initial-variant="' + productId + '"]');
+      var initialVariant = null;
+      if (initialScript) {
+        try {
+          initialVariant = JSON.parse(initialScript.textContent);
+        } catch (e) {
+          initialVariant = null;
+        }
+      }
+      applyVariant(root, initialVariant);
+
+      if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+        subscribe(PUB_SUB_EVENTS.variantChange, function (event) {
+          var variant = event && event.data && event.data.variant;
+          if (!variant) { root.hidden = true; return; }
+          if (variant.product_id && String(variant.product_id) !== String(productId)) return;
+          applyVariant(root, variant);
+        });
+      } else {
+        // Fallback for the (unexpected) case pubsub isn't loaded: scrape native
+        // form fields directly. Only catches the "dropdown" picker style, since
+        // Dawn's "button" style doesn't name its inputs options[...].
+        var form = document.querySelector('#product-form-' + productId) || document.querySelector('[id^="product-form-"]');
+        var container = form ? form.closest('.product') || document : document;
+        container.addEventListener('change', function (e) {
+          if (e.target && e.target.name && e.target.name.indexOf('options[') === 0) {
+            var values = [];
+            container.querySelectorAll('input[name^="options["]:checked, select[name^="options["]').forEach(function (el) {
+              values.push(el.value);
+            });
+            updateGuide(root, findSizeFromOptions(values));
+          }
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('[data-spc-size-guide]').forEach(init);
+      });
+    } else {
+      document.querySelectorAll('[data-spc-size-guide]').forEach(init);
+    }
+  })();
+</script>

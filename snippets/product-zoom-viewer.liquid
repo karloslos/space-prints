@@ -1,0 +1,81 @@
+{% comment %}
+  Fullscreen "Explore full detail" viewer for the product's "Zoom image" metafield (custom.zoom_image).
+  Rendered once by main-product. The first gallery image opens it via modal-opener (see product-thumbnail).
+  If the metafield is empty this renders nothing, and the product keeps the normal lightbox.
+
+  Accepts:
+  - zoom_image: {Object} The metafield value (product.metafields.custom.zoom_image.value)
+{% endcomment %}
+
+{%- liquid
+  assign zoom_img = zoom_image.preview_image | default: zoom_image
+-%}
+
+{%- if zoom_img != blank and zoom_img.width != blank and zoom_img.height != blank -%}
+  {{ 'zoom-viewer.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'zoom-viewer.js' | asset_url }}" defer="defer"></script>
+
+  <zoom-viewer
+    id="ZoomViewer-{{ section.id }}"
+    class="zoom-viewer"
+    data-full-src="{{ zoom_img | image_url }}"
+    data-preview-src="{{ zoom_img | image_url: width: 1600 }}"
+    data-width="{{ zoom_img.width }}"
+    data-height="{{ zoom_img.height }}"
+  >
+    <div
+      class="zoom-viewer__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Explore full detail: {{ product.title | escape }}"
+      tabindex="-1"
+    >
+      <div class="zoom-viewer__stage">
+        <div class="zoom-viewer__canvas">
+          <img class="zoom-viewer__preview" alt="{{ zoom_img.alt | default: product.title | escape }}" draggable="false">
+          <img class="zoom-viewer__full" alt="" draggable="false">
+        </div>
+      </div>
+
+      <button
+        id="ModalClose-zoom-{{ section.id }}"
+        type="button"
+        class="zoom-viewer__close"
+        aria-label="{{ 'accessibility.close' | t }}"
+      >
+        {{ 'icon-close.svg' | inline_asset_content }}
+      </button>
+
+      <div class="zoom-viewer__toolbar" role="group" aria-label="Zoom controls">
+        <button type="button" class="zoom-viewer__button" data-zoom-action="out" aria-label="Zoom out">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+        </button>
+        <button
+          type="button"
+          class="zoom-viewer__button zoom-viewer__button--readout"
+          data-zoom-action="fit"
+          aria-label="Fit image to screen"
+          title="Fit to screen (0)"
+        >
+          <span class="zoom-viewer__readout">Fit</span>
+        </button>
+        <button type="button" class="zoom-viewer__button" data-zoom-action="in" aria-label="Zoom in">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <button
+          type="button"
+          class="zoom-viewer__button zoom-viewer__button--text"
+          data-zoom-action="actual"
+          title="Zoom to actual pixels (1)"
+        >
+          Max detail
+        </button>
+      </div>
+
+      <p class="zoom-viewer__hint" aria-hidden="true">
+        Scroll or pinch to zoom &middot; drag to move &middot; double-tap to jump in
+      </p>
+      <p class="zoom-viewer__status" role="status" aria-live="polite" hidden></p>
+    </div>
+  </zoom-viewer>
+{%- endif -%}

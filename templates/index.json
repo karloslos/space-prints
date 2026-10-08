@@ -1,85 +1,243 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
-      "type": "image-banner",
+      "type": "hero-cosmic",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "stat1": {
+          "type": "stat",
           "settings": {
-            "heading": "[Placeholder tagline — e.g. \"Bring the cosmos home\"]",
-            "heading_size": "h0"
+            "value": "100+",
+            "label": "prints"
           }
         },
-        "text": {
-          "type": "text",
+        "stat2": {
+          "type": "stat",
           "settings": {
-            "text": "[Placeholder subheading — one line about fine-art space photography prints]",
-            "text_style": "subtitle"
+            "value": "50yr",
+            "label": "archival life"
           }
         },
-        "buttons": {
-          "type": "buttons",
+        "stat3": {
+          "type": "stat",
           "settings": {
-            "button_label_1": "Shop Prints",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "value": "4.9★",
+            "label": "avg rating"
           }
         }
       },
-      "block_order": ["heading", "text", "buttons"],
+      "block_order": [
+        "stat1",
+        "stat2",
+        "stat3"
+      ],
       "settings": {
-        "image_overlay_opacity": 30,
-        "image_height": "large",
-        "desktop_content_position": "middle-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-4",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "eyebrow": "The universe, framed",
+        "heading": "Bring space into your space",
+        "heading_highlight": "your",
+        "subtext": "Beautiful views from around our vast and complex Universe. From swirling nebulae to the best of human endeavour. For walls that deserve something extraordinary.",
+        "background_image": "shopify://shop_images/2.jpg",
+        "button_label": "View Collections",
+        "button_link": "shopify://collections",
+        "floating_image": "shopify://shop_images/pillars-of-creation-jwst.jpg",
+        "floating_link": "shopify://products/pillars-of-creation-framed-mounted-print",
+        "floating_title": "Pillars of Creation",
+        "floating_subtitle": "Framed Prints from £45",
+        "padding_top": 120,
+        "padding_bottom": 120
       }
     },
     "featured_collections": {
       "type": "featured-collections",
       "blocks": {
-        "mars": {
-          "type": "tile",
-          "settings": {
-            "title": "Mars"
-          }
-        },
         "nebulae": {
           "type": "tile",
           "settings": {
-            "title": "Nebulae"
+            "image": "shopify://shop_images/STScI-01G7ETNMR8CBHQQ64R4CVA1E6T.jpg",
+            "title": "Nebulae",
+            "count": "Stunning star-forming regions",
+            "link": "shopify://collections/nebulas"
           }
         },
-        "earth": {
+        "deep_field": {
           "type": "tile",
           "settings": {
-            "title": "Earth"
+            "image": "shopify://shop_images/21328560323_6b33f5d4c3_o.jpg",
+            "title": "Apollo Missions",
+            "count": "The missions that changed humanity",
+            "link": "shopify://collections/apollo-missions"
           }
         },
-        "deep_space": {
+        "star_clusters": {
           "type": "tile",
           "settings": {
-            "title": "Deep Space"
+            "image": "shopify://shop_images/47930_PIA25681.jpg",
+            "title": "Mars Rovers",
+            "count": "The robot labs capturing the red planet",
+            "link": "shopify://collections/mars-rovers"
           }
         }
       },
-      "block_order": ["mars", "nebulae", "earth", "deep_space"],
+      "block_order": [
+        "nebulae",
+        "deep_field",
+        "star_clusters"
+      ],
       "settings": {
-        "heading": "Shop by subject",
-        "heading_size": "h1",
-        "image_ratio": "portrait",
-        "columns_desktop": 4,
+        "eyebrow": "Browse by theme",
+        "heading": "Collections",
+        "view_all_label": "View all",
+        "view_all_link": "shopify://collections",
+        "columns_desktop": 3,
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "products": {
+      "type": "product-showcase",
+      "blocks": {
+        "prints": {
+          "type": "filter",
+          "settings": {
+            "label": "Prints",
+            "product_type": "Prints"
+          }
+        },
+        "accessories": {
+          "type": "filter",
+          "settings": {
+            "label": "Mugs",
+            "product_type": "Mugs"
+          }
+        }
+      },
+      "block_order": [
+        "prints",
+        "accessories"
+      ],
+      "settings": {
+        "eyebrow": "Fan favourites",
+        "heading": "Best Sellers",
+        "collection": "nebulas",
+        "products_to_show": 6,
+        "columns_desktop": 3,
+        "show_filters": true,
+        "button_label": "Browse All Products",
+        "button_link": "shopify://collections/all",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "features": {
+      "type": "feature-grid",
+      "blocks": {
+        "quality": {
+          "type": "feature",
+          "settings": {
+            "icon": "✦",
+            "heading": "Museum-Grade Print Quality",
+            "text": "Archival pigment inks on 310gsm fine art paper. Colours that last 100+ years."
+          }
+        },
+        "real": {
+          "type": "feature",
+          "settings": {
+            "icon": "✧",
+            "heading": "Real Space Photography",
+            "text": "All images are created by the most innovative and incredible space missions created by humanity."
+          }
+        },
+        "framed": {
+          "type": "feature",
+          "settings": {
+            "icon": "◈",
+            "heading": "Framed & Ready to Hang",
+            "text": "Our framed prints are wall-ready and constructed by experts."
+          }
+        },
+        "delivery": {
+          "type": "feature",
+          "settings": {
+            "icon": "✦",
+            "heading": "Free UK Delivery",
+            "text": "Carefully packaged and shipped free on every order over £50."
+          }
+        }
+      },
+      "block_order": [
+        "quality",
+        "real",
+        "framed",
+        "delivery"
+      ],
+      "settings": {
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "featured_print": {
+      "type": "featured-product",
+      "blocks": {
+        "eyebrow": {
+          "type": "text",
+          "settings": {
+            "text": "Print of the Month",
+            "text_style": "subtitle"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        }
+      },
+      "block_order": [
+        "eyebrow",
+        "title",
+        "price",
+        "variant_picker",
+        "buy_buttons"
+      ],
+      "settings": {
+        "product": "apollo-11-flag-canvas",
         "color_scheme": "scheme-4",
-        "padding_top": 48,
-        "padding_bottom": 48
+        "secondary_background": false,
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 96,
+        "padding_bottom": 96
       }
     },
     "story_teaser": {
@@ -95,25 +253,76 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>[Placeholder story teaser — 2–3 sentences introducing Space Prints: fine-art prints made from real NASA space photography, for people who love looking up.]</p>"
+            "text": "<p>Every Space Prints image starts as a real photograph — captured by Hubble, Webb, Apollo, or a rover a hundred million miles from home. We turn it into a fine-art print, giclée-printed and built to last, so you can hang the universe on your wall.</p>"
           }
         },
         "button": {
           "type": "button",
           "settings": {
             "button_label": "Read our story",
-            "button_style_secondary": true
+            "button_link": "",
+            "button_style_secondary": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
           }
         }
       },
-      "block_order": ["heading", "text", "button"],
+      "block_order": [
+        "heading",
+        "text",
+        "button"
+      ],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
         "color_scheme": "scheme-4",
         "full_width": true,
-        "padding_top": 60,
-        "padding_bottom": 60
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "The quality is absolutely stunning. I've ordered three prints now and each one is better than the last. My Pillars of Creation piece stops everyone who walks in.",
+            "name": "Maren H.",
+            "location": "Edinburgh"
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Arrived beautifully packaged and the colour depth is incredible. Looks like a window, not a print.",
+            "name": "Tom K.",
+            "location": "Bristol"
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Bought one as a gift and ended up ordering two more for myself. Genuinely gallery quality.",
+            "name": "Priya S.",
+            "location": "Manchester"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "settings": {
+        "eyebrow": "Reviews",
+        "heading": "Collectors love it",
+        "padding_top": 96,
+        "padding_bottom": 96
       }
     },
     "photo_of_the_week": {
@@ -122,29 +331,43 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Photo of the week",
+            "heading": "New prints. First.",
             "heading_size": "h2"
           }
         },
         "paragraph": {
           "type": "paragraph",
           "settings": {
-            "text": "<p>[Placeholder pitch — one line: get a new space photo in your inbox every week.]</p>"
+            "text": "<p>A new space photograph in your inbox every week — no charge, unsubscribe any time.</p>"
           }
         },
         "email_form": {
-          "type": "email_form"
+          "type": "email_form",
+          "settings": {}
         }
       },
-      "block_order": ["heading", "paragraph", "email_form"],
+      "block_order": [
+        "heading",
+        "paragraph",
+        "email_form"
+      ],
       "settings": {
+        "signup_tag": "photo-of-the-week",
         "color_scheme": "scheme-4",
         "full_width": false,
-        "signup_tag": "photo-of-the-week",
-        "padding_top": 60,
-        "padding_bottom": 72
+        "padding_top": 80,
+        "padding_bottom": 96
       }
     }
   },
-  "order": ["hero", "featured_collections", "story_teaser", "photo_of_the_week"]
+  "order": [
+    "hero",
+    "featured_collections",
+    "products",
+    "features",
+    "featured_print",
+    "story_teaser",
+    "testimonials",
+    "photo_of_the_week"
+  ]
 }
