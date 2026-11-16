@@ -1521,7 +1521,11 @@ a.product__text {
   background: transparent;
 }
 
-.product-media-modal__content > *:not(.active) {
+.product-media-modal__content > *:not(.active),
+.product-media-modal__content > .product__media-item--variant:first-child:not(.active) {
+  /* The second selector beats Dawn's "variant image :first-child { display: block }"
+     rule (min-width: 750px), which otherwise leaves the first image showing above
+     the clicked one in the lightbox. */
   display: none;
 }
 

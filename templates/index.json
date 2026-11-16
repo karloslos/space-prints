@@ -25,19 +25,11 @@
             "value": "50yr",
             "label": "archival life"
           }
-        },
-        "stat3": {
-          "type": "stat",
-          "settings": {
-            "value": "4.9★",
-            "label": "avg rating"
-          }
         }
       },
       "block_order": [
         "stat1",
-        "stat2",
-        "stat3"
+        "stat2"
       ],
       "settings": {
         "eyebrow": "The universe, framed",
@@ -48,9 +40,9 @@
         "button_label": "View Collections",
         "button_link": "shopify://collections",
         "floating_image": "shopify://shop_images/pillars-of-creation-jwst.jpg",
-        "floating_link": "shopify://products/pillars-of-creation-framed-mounted-print",
+        "floating_link": "shopify://products/pillars-of-creation-canvas",
         "floating_title": "Pillars of Creation",
-        "floating_subtitle": "Framed Prints from £45",
+        "floating_subtitle": "Canvases from £112",
         "padding_top": 120,
         "padding_bottom": 120
       }
@@ -101,6 +93,27 @@
         "padding_bottom": 96
       }
     },
+    "image_banner_ByfxWV": {
+      "type": "image-banner",
+      "custom_css": [
+        ".banner {max-width: 1100px; margin-inline: auto;}",
+        "@media screen and (max-width: 749px) {.banner {max-width: calc(100% - 30px); }}"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/Giant-Cnvases.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    },
     "products": {
       "type": "product-showcase",
       "blocks": {
@@ -126,10 +139,11 @@
       "settings": {
         "eyebrow": "Fan favourites",
         "heading": "Best Sellers",
-        "collection": "nebulas",
+        "collection": "bestsellers",
         "products_to_show": 6,
         "columns_desktop": 3,
-        "show_filters": true,
+        "show_filters": false,
+        "show_secondary_image": true,
         "button_label": "Browse All Products",
         "button_link": "shopify://collections/all",
         "padding_top": 96,
@@ -144,7 +158,7 @@
           "settings": {
             "icon": "✦",
             "heading": "Museum-Grade Print Quality",
-            "text": "Archival pigment inks on 310gsm fine art paper. Colours that last 100+ years."
+            "text": "Archival pigment inks on 310gsm fine art paper. Colours that last 50+ years."
           }
         },
         "real": {
@@ -282,49 +296,6 @@
         "padding_bottom": 80
       }
     },
-    "testimonials": {
-      "type": "testimonials",
-      "blocks": {
-        "t1": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "quote": "The quality is absolutely stunning. I've ordered three prints now and each one is better than the last. My Pillars of Creation piece stops everyone who walks in.",
-            "name": "Maren H.",
-            "location": "Edinburgh"
-          }
-        },
-        "t2": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "quote": "Arrived beautifully packaged and the colour depth is incredible. Looks like a window, not a print.",
-            "name": "Tom K.",
-            "location": "Bristol"
-          }
-        },
-        "t3": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "quote": "Bought one as a gift and ended up ordering two more for myself. Genuinely gallery quality.",
-            "name": "Priya S.",
-            "location": "Manchester"
-          }
-        }
-      },
-      "block_order": [
-        "t1",
-        "t2",
-        "t3"
-      ],
-      "settings": {
-        "eyebrow": "Reviews",
-        "heading": "Collectors love it",
-        "padding_top": 96,
-        "padding_bottom": 96
-      }
-    },
     "photo_of_the_week": {
       "type": "newsletter",
       "blocks": {
@@ -363,11 +334,11 @@
   "order": [
     "hero",
     "featured_collections",
+    "image_banner_ByfxWV",
     "products",
     "features",
     "featured_print",
     "story_teaser",
-    "testimonials",
     "photo_of_the_week"
   ]
 }

@@ -13,6 +13,18 @@
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "text_HpB3Er": {
+          "type": "text",
+          "settings": {
+            "heading": "",
+            "subtext": "<p><strong>Space Prints Ltd</strong> is registered in England and Wales. Company Registration No. 17569685. <strong>Registered Office: </strong>4th Floor, Silverstream House, 45 Fitzroy Street, London W1T 6EB. Email shop@spaceprints.co.uk.&nbsp;</p><p>Not affiliated with, sponsored by or endorsed by NASA.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_HpB3Er"
+      ],
       "settings": {
         "color_scheme": "scheme-1",
         "newsletter_enable": true,

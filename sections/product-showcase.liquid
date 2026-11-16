@@ -16,6 +16,11 @@
     background: none;
     font-family: var(--sp-font-body);
   }
+  {%- unless section.settings.show_filters %}
+  .product-showcase-{{ section.id }} .product-showcase__grid {
+    margin-top: 50px;
+  }
+  {%- endunless %}
   .product-showcase-{{ section.id }} .product-showcase__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -78,7 +83,7 @@
           endif
         -%}
         <div class="product-showcase__card" data-product-type="{{ product.type | escape }}">
-          {% render 'spc-product-card', product: product, badge_type: badge_type %}
+          {% render 'spc-product-card', product: product, badge_type: badge_type, show_secondary_image: section.settings.show_secondary_image %}
         </div>
       {%- else -%}
         {%- for i in (1..8) -%}
@@ -131,6 +136,7 @@
     { "type": "range", "id": "products_to_show", "min": 4, "max": 16, "step": 1, "label": "Products to show", "default": 8 },
     { "type": "range", "id": "columns_desktop", "min": 3, "max": 5, "step": 1, "label": "Columns on desktop", "default": 4 },
     { "type": "checkbox", "id": "show_filters", "label": "Show filter tabs", "default": true },
+    { "type": "checkbox", "id": "show_secondary_image", "label": "Show second image on hover", "default": true },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Browse All Products" },
     { "type": "url", "id": "button_link", "label": "Button link" },
     { "type": "header", "content": "Layout" },

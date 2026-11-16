@@ -115,6 +115,29 @@
       }}
     </div>
   {%- endif -%}
+  {% if section.id == 'template--28106665689376__image_banner_ByfxWV' %}
+  <a
+    href="{{ routes.collections_url }}/giant-canvases"
+    aria-label="Shop Giant Canvases"
+    class="giant-canvas-banner-link"
+  ></a>
+  <style>
+    #Banner-{{ section.id }} {
+      position: relative;
+    }
+    #Banner-{{ section.id }} .giant-canvas-banner-link {
+      display: block;
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      cursor: pointer;
+    }
+    #Banner-{{ section.id }} .giant-canvas-banner-link:focus-visible {
+      outline: 3px solid currentColor;
+      outline-offset: -6px;
+    }
+  </style>
+{% endif %}
   <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
       {%- for block in section.blocks -%}

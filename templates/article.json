@@ -34,13 +34,27 @@
         "content": {
           "type": "content",
           "settings": {}
+        },
+        "better_blog_builder_editor_mf_related_products_YUjxrR": {
+          "type": "shopify://apps/better-blog-builder-editor/blocks/mf_related_products/019f83d2-335b-7758-8541-d5ee0a737d99",
+          "settings": {
+            "heading": "Related Products",
+            "layout": "grid",
+            "products_number": 4,
+            "columns": 3,
+            "show_image": true,
+            "show_price": true,
+            "show_swatches": true,
+            "show_add_to_cart": true
+          }
         }
       },
       "block_order": [
         "featured_image",
         "title",
         "share",
-        "content"
+        "content",
+        "better_blog_builder_editor_mf_related_products_YUjxrR"
       ],
       "settings": {}
     }
